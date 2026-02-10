@@ -110,6 +110,13 @@ const Index = () => {
                   : "Think about it… 🥰"}
               </p>
             )}
+            {noCount > 0 && (
+              <p className="text-base sm:text-lg text-card/80 font-semibold drop-shadow animate-fade-in"
+                style={{ fontFamily: "var(--font-body)" }}
+              >
+                {NO_MESSAGES[Math.min(noCount, maxNo - 1)]}
+              </p>
+            )}
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full relative min-h-[140px] justify-center">

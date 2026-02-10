@@ -68,116 +68,150 @@ const Index = () => {
   const noButtonText = NO_MESSAGES[Math.min(noCount, maxNo - 1)];
 
   return (
-    <div
-      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden"
-      ref={containerRef}
-    >
-      {/* Background image */}
+    <div className="relative overflow-y-auto overflow-x-hidden">
+      {/* PAGE 1 — Proposal */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${valentineBg})` }}
-      />
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background/60" />
+        className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden"
+        ref={containerRef}
+      >
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${valentineBg})` }}
+        />
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background/60" />
 
-      <FloatingHearts />
+        <FloatingHearts />
 
-      {accepted && <Confetti />}
+        {accepted && <Confetti />}
 
-      {/* Main content */}
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6 py-12 text-center max-w-md w-full">
-        {!accepted ? (
-          <>
-            {/* Heart icon */}
-            <div className="text-6xl sm:text-7xl animate-heartbeat select-none">
-              💝
-            </div>
+        {/* Main content */}
+        <div className="relative z-10 flex flex-col items-center gap-8 px-6 py-12 text-center max-w-md w-full">
+          {!accepted ? (
+            <>
+              {/* Heart icon */}
+              <div className="text-6xl sm:text-7xl animate-heartbeat select-none">
+                💝
+              </div>
 
-            {/* Question */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-card leading-tight drop-shadow-lg"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Will you be my Valentine?
-            </h1>
+              {/* Question */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-card leading-tight drop-shadow-lg"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Will you be my Valentine?
+              </h1>
 
-            {/* Subtitle that changes */}
-            {noCount > 0 && (
-              <p className="text-lg sm:text-xl text-card/90 font-medium italic drop-shadow animate-fade-in"
+              {/* Subtitle that changes */}
+              {noCount > 0 && (
+                <p className="text-lg sm:text-xl text-card/90 font-medium italic drop-shadow animate-fade-in"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {noCount >= 3
+                    ? "You know you want to say yes… 💕"
+                    : "Think about it… 🥰"}
+                </p>
+              )}
+              {noCount > 0 && (
+                <p className="text-base sm:text-lg text-card/80 font-semibold drop-shadow animate-fade-in"
+                  style={{ fontFamily: "var(--font-body)" }}
+                >
+                  {NO_MESSAGES[Math.min(noCount, maxNo - 1)]}
+                </p>
+              )}
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full relative min-h-[140px] justify-center">
+                {/* YES button — grows with each NO */}
+                <button
+                  onClick={handleYes}
+                  className="rounded-full font-bold text-primary-foreground shadow-xl transition-all duration-300 animate-pulse-glow active:scale-95 z-10"
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: `${16 + noCount * 2}px`,
+                    padding: `${14 + noCount * 3}px ${36 + noCount * 6}px`,
+                    background: "linear-gradient(135deg, hsl(346, 77%, 55%), hsl(340, 80%, 62%))",
+                    transform: `scale(${yesScale})`,
+                  }}
+                >
+                  YES 💖
+                </button>
+
+                {/* NO button — moves around */}
+                <button
+                  onClick={handleNo}
+                  onMouseEnter={handleNoHover}
+                  onTouchStart={handleNoHover}
+                  className={`rounded-full font-semibold text-muted-foreground border-2 border-border bg-card/80 backdrop-blur-sm shadow-md transition-all duration-200 active:scale-95 z-10 ${
+                    noShaking ? "animate-shake" : ""
+                  }`}
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    padding: "14px 32px",
+                    fontSize: `${Math.max(14 - noCount, 10)}px`,
+                    transform: `translate(${noPosition.x}px, ${noPosition.y}px)`,
+                    opacity: Math.max(1 - noCount * 0.12, 0.4),
+                  }}
+                >
+                  {noButtonText}
+                </button>
+              </div>
+            </>
+          ) : (
+            /* Success state */
+            <div className="animate-success flex flex-col items-center gap-6">
+              <div className="text-7xl sm:text-8xl animate-heartbeat select-none">
+                💖
+              </div>
+              <h1
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-card leading-tight drop-shadow-lg"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                I knew you'd say yes!
+              </h1>
+              <p
+                className="text-xl sm:text-2xl text-card/90 font-medium drop-shadow"
                 style={{ fontFamily: "var(--font-body)" }}
               >
-                {noCount >= 3
-                  ? "You know you want to say yes… 💕"
-                  : "Think about it… 🥰"}
+                You just made me the happiest person ever 🥰
               </p>
-            )}
-            {noCount > 0 && (
-              <p className="text-base sm:text-lg text-card/80 font-semibold drop-shadow animate-fade-in"
-                style={{ fontFamily: "var(--font-body)" }}
-              >
-                {NO_MESSAGES[Math.min(noCount, maxNo - 1)]}
-              </p>
-            )}
-
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full relative min-h-[140px] justify-center">
-              {/* YES button — grows with each NO */}
-              <button
-                onClick={handleYes}
-                className="rounded-full font-bold text-primary-foreground shadow-xl transition-all duration-300 animate-pulse-glow active:scale-95 z-10"
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: `${16 + noCount * 2}px`,
-                  padding: `${14 + noCount * 3}px ${36 + noCount * 6}px`,
-                  background: "linear-gradient(135deg, hsl(346, 77%, 55%), hsl(340, 80%, 62%))",
-                  transform: `scale(${yesScale})`,
-                }}
-              >
-                YES 💖
-              </button>
-
-              {/* NO button — moves around */}
-              <button
-                onClick={handleNo}
-                onMouseEnter={handleNoHover}
-                onTouchStart={handleNoHover}
-                className={`rounded-full font-semibold text-muted-foreground border-2 border-border bg-card/80 backdrop-blur-sm shadow-md transition-all duration-200 active:scale-95 z-10 ${
-                  noShaking ? "animate-shake" : ""
-                }`}
-                style={{
-                  fontFamily: "var(--font-body)",
-                  padding: "14px 32px",
-                  fontSize: `${Math.max(14 - noCount, 10)}px`,
-                  transform: `translate(${noPosition.x}px, ${noPosition.y}px)`,
-                  opacity: Math.max(1 - noCount * 0.12, 0.4),
-                }}
-              >
-                {noButtonText}
-              </button>
+              <div className="mt-4 text-5xl animate-heartbeat">
+                🌹💕🌹
+              </div>
             </div>
-          </>
-        ) : (
-          /* Success state */
-          <div className="animate-success flex flex-col items-center gap-6">
-            <div className="text-7xl sm:text-8xl animate-heartbeat select-none">
-              💖
-            </div>
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-card leading-tight drop-shadow-lg"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              I knew you'd say yes!
-            </h1>
-            <p
-              className="text-xl sm:text-2xl text-card/90 font-medium drop-shadow"
+          )}
+        </div>
+
+        {/* Scroll down indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
+          <p className="text-card/80 text-sm font-medium drop-shadow" style={{ fontFamily: "var(--font-body)" }}>
+            Scroll down 💌
+          </p>
+          <span className="text-card/70 text-xl">↓</span>
+        </div>
+      </div>
+
+      {/* PAGE 2 — Message */}
+      <div
+        className="relative flex min-h-[100dvh] items-center justify-center"
+        style={{ backgroundImage: `url(${valentineBg})`, backgroundSize: "cover", backgroundPosition: "center" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background/70" />
+        <div className="relative z-10 flex flex-col items-center gap-6 px-6 py-16 w-full max-w-lg">
+          <h2
+            className="text-2xl sm:text-3xl font-bold text-card drop-shadow-lg"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Things I want to say… 💕
+          </h2>
+          <div className="w-full rounded-2xl bg-card/20 backdrop-blur-md border border-card/30 shadow-xl p-6">
+            <textarea
+              className="w-full min-h-[200px] bg-transparent text-card placeholder:text-card/50 text-base sm:text-lg focus:outline-none resize-none"
               style={{ fontFamily: "var(--font-body)" }}
-            >
-              You just made me the happiest person ever 🥰
-            </p>
-            <div className="mt-4 text-5xl animate-heartbeat">
-              🌹💕🌹
-            </div>
+              placeholder="Type your heartfelt message here… 💗"
+            />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

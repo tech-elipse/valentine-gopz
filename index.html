@@ -1,44 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Will You Be My Valentine? 💖</title>
-  <meta name="description" content="A special Valentine's Day proposal just for you" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
 <body>
-  <!-- Floating hearts background -->
-  <div id="floating-hearts" class="floating-hearts"></div>
 
-  <!-- Confetti container (shown on success) -->
-  <div id="confetti" class="confetti-container"></div>
+  <!-- PAGE 1 : PROPOSAL -->
+  <div id="proposal" class="page">
+    <h1>Will you be my Valentine? 🌹</h1>
 
-  <!-- Main content -->
-  <main class="container" id="main-container">
-    <!-- Proposal state -->
-    <div id="proposal" class="content">
-      <div class="heart-icon">💝</div>
-      <h1>Will you be my Valentine?</h1>
-      <p id="subtitle" class="subtitle"></p>
-      <div class="buttons">
-        <button id="yes-btn" class="btn btn-yes" onclick="handleYes()">YES 💖</button>
-        <button id="no-btn" class="btn btn-no" onclick="handleNo()" onmouseenter="handleNoHover()" ontouchstart="handleNoHover()">No 🙃</button>
-      </div>
+    <div class="buttons">
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 🙃</button>
     </div>
+  </div>
 
-    <!-- Success state (hidden initially) -->
-    <div id="success" class="content success-content" style="display:none;">
-      <div class="heart-icon">💖</div>
-      <h1>I knew you'd say yes!</h1>
-      <p class="success-text">You just made me the happiest person ever 🥰</p>
-      <div class="roses">🌹💕🌹</div>
-    </div>
-  </main>
+  <!-- PAGE 2 : SCROLL PAGE (HIDDEN INITIALLY) -->
+  <div id="scrollPage" class="page hidden">
+    <section class="section hero">
+      <h1>You said YES ❤️</h1>
+      <p>So here’s something I wanted to show you…</p>
+      <span class="scroll-hint">⬇ scroll</span>
+    </section>
 
-  <script src="script.js"></script>
+    <section class="section memories">
+      <h2>Little Things</h2>
+      <p>Every smile, every chat, every random moment…</p>
+    </section>
+
+    <section class="section final">
+      <h2>Happy Valentine’s Day 💕</h2>
+      <p>And this is just the beginning.</p>
+    </section>
+  </div>
+
 </body>
-</html>
